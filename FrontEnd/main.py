@@ -71,7 +71,7 @@ class Main(QMainWindow, Ui_Main):
 
         
         try:
-            self.server = server_cliente('10.0.0.102', 8004)
+            self.server = server_cliente('10.180.42.32', 8005)
         except ConnectionRefusedError:
             QtWidgets.QMessageBox.information(None, 'ERROR', f'Não foi possível conectar ao servidor.'
                                                              f'\nVerifique a conexão e tente novamente')

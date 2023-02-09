@@ -62,13 +62,28 @@
 
 # print(teste)
 
-import mysql.connector as mysql
+# import mysql.connector as mysql
 
-conexao = mysql.connect(host='localhost', db='conta', user='root', password='Tales of demons', autocommit=True)
-cursor = conexao.cursor()
+# conexao = mysql.connect(host='localhost', db='conta', user='root', password='Tales of demons', autocommit=True)
+# cursor = conexao.cursor()
 
-query = 'SELECT historico FROM cliente WHERE usuario = "user2"'
-cursor.execute(query)
-a = cursor.fetchone()
-b = a[0][0:35:]
-print(b)
+# query = 'SELECT historico FROM cliente WHERE usuario = "user2"'
+# cursor.execute(query)
+# a = cursor.fetchone()
+# b = a[0][0:35:]
+# print(b)
+
+# import requests
+
+# ip_publico = requests.get('https://api.ipify.org/').text
+# print(f'Ip publico: {ip_publico}')
+
+# import socket
+# print(socket.gethostbyname(socket.gethostname()))
+
+from netifaces import interfaces, ifaddresses, AF_INET
+for ifaceName in interfaces():
+    addresses = [i['addr'] for i in ifaddresses(ifaceName).setdefault(AF_INET, [{'addr':'No IP addr'}] )]
+    print(' '.join(addresses))
+
+print(addresses)

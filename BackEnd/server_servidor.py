@@ -1,6 +1,7 @@
 import socket
 from banco import *
 import threading
+from netifaces import interfaces, ifaddresses, AF_INET
 
 class ClienteThread(threading.Thread):
 
@@ -17,13 +18,12 @@ class ClienteThread(threading.Thread):
                 if solicitaco:
                     metodo = solicitaco.pop(0)
                     if metodo == 'sair':
-                        # self.clientSock.send(f'saiu'.encode('utf-8'))
                         self.clientSock.close()
                         break
                     banco = Banco()
                     func = getattr(banco, metodo)
                     retorno = func(*solicitaco)
-                    print(f'Retorno {retorno}\n\n\n::::::::::::::::::::::::::::::::::')
+                    print(f'Retorno {retorno}\n\n\n::::::::::::::::::::::::::::::::::\n\n')
 
                     self.clientSock.send(f'{retorno}'.encode('utf-8')) 
         except AttributeError:
@@ -31,9 +31,9 @@ class ClienteThread(threading.Thread):
 
 class Servidor():
     
-    def __init__(self):
-        self.host = '10.0.0.102' #'10.180.47.255' #'localhost'#'10.180.42.7' #
-        self.port = 8004
+    def __init__(self, host):
+        self.host = host 
+        self.port = 8005
         addr = (self.host, self.port)
         self.serv_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #cria o socket
         self.serv_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) #reinicia o socket
@@ -43,15 +43,20 @@ class Servidor():
         
     def start(self):
         while True:
-            print("aguardando conexão...")
+            print("aguardando conexão...\n\n")
             client_sock, client_address = self.serv_socket.accept() 
-            print(f'Cliente {client_address[0]} conectado.')
-            print("aguardando solicitação...")
+            print(f'Cliente {client_address[0]} conectado.\n\n')
+            print("aguardando solicitação...\n\n")
 
             novaThread = ClienteThread(client_sock, client_address)
 
-            print("Thread inciada")
+            print("Thread inciada\n\n")
             novaThread.start()
 
-c = Servidor()
+
+for ifaceName in interfaces():
+    addresses = [i['addr'] for i in ifaddresses(ifaceName).setdefault(AF_INET, [{'addr':'No IP addr'}] )] # pega o ip da maquina
+
+print(f'Ip do servidor: {addresses[0]}\n\n')
+c = Servidor(addresses[0])
 c.start()
