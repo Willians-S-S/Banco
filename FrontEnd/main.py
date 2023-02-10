@@ -71,7 +71,7 @@ class Main(QMainWindow, Ui_Main):
 
         
         try:
-            self.server = server_cliente('10.180.42.32', 8005)
+            self.server = server_cliente('10.0.0.102', 8005)
         except ConnectionRefusedError:
             QtWidgets.QMessageBox.information(None, 'ERROR', f'Não foi possível conectar ao servidor.'
                                                              f'\nVerifique a conexão e tente novamente')
@@ -109,7 +109,6 @@ class Main(QMainWindow, Ui_Main):
         self.Tela_Historico.ButtonVoltar.clicked.connect(self.BotaoParaTelaPrincipal)
 
     def sair(self):
-        # self.server.send('sair'.encode())
         self.request_server('sair')
         sys.exit()
 
@@ -214,7 +213,7 @@ class Main(QMainWindow, Ui_Main):
         self.Tela_Login.lineSenha.setText("")
 
     def BotaoAtualizar(self):
-        solicit = f'get_saldo*{self.numero}'
+        solicit = f'verificarSaldo*{self.numero}'
         flag = self.request_server(solicit)
         self.Tela_Principal.labelSaldo.setText(f"R$ {float(flag[0]):.2f}")
 
@@ -285,7 +284,7 @@ class Main(QMainWindow, Ui_Main):
         return a
 
     def BotaoParaTelaHistorico(self):
-        solicit = f'get_historico*{self.numero}'
+        solicit = f'historico*{self.numero}'
         flag = self.request_server(solicit)
         noti = self.concatenarHis(flag)
         self.Tela_Historico.textHistorico.setText(noti)
