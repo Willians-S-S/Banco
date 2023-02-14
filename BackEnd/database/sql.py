@@ -37,6 +37,7 @@ class Database():
         return True, resul
     
     def verificarUsuario(self, usuario, senha = None, UserPassword = True):
+        
         if UserPassword:
             self.cursor.execute(f'SELECT usuario FROM cliente WHERE usuario = "{usuario}"')
             exists = self.cursor.fetchall()

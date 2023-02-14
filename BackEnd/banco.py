@@ -4,6 +4,7 @@ import threading
 from database.sql import *
 
 class Banco():
+    
 
     __slots__ = ['bd', 'sinc', 'numero']
 
@@ -12,6 +13,7 @@ class Banco():
         self.sinc = threading.Lock()
 
     def add_conta(self, usuario, senha, nome, cpf):
+        
         if not self.bd.verificarCPF(cpf):
             if not self.bd.verificarUsuario(usuario):
                 while True:
