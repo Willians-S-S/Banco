@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-br" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Banco &mdash; Banco Will 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Dabase SQL" href="module6.html" />
+    <link rel="prev" title="Servidor" href="module4.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Banco Will
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Documentação</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="module1.html">Main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module2.html">Telas do banco</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module3.html">Cliente servidor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module4.html">Servidor</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Banco</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#banco.Banco"><code class="docutils literal notranslate"><span class="pre">Banco</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#banco.Banco.add_conta"><code class="docutils literal notranslate"><span class="pre">Banco.add_conta()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#banco.Banco.depositar"><code class="docutils literal notranslate"><span class="pre">Banco.depositar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#banco.Banco.excluirConta"><code class="docutils literal notranslate"><span class="pre">Banco.excluirConta()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#banco.Banco.historico"><code class="docutils literal notranslate"><span class="pre">Banco.historico()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#banco.Banco.login"><code class="docutils literal notranslate"><span class="pre">Banco.login()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#banco.Banco.sacar"><code class="docutils literal notranslate"><span class="pre">Banco.sacar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#banco.Banco.transferir"><code class="docutils literal notranslate"><span class="pre">Banco.transferir()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module6.html">Dabase SQL</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Banco Will</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Documentação</a></li>
+      <li class="breadcrumb-item active">Banco</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/module5.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-banco">
+<span id="banco"></span><h1>Banco<a class="headerlink" href="#module-banco" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="banco.Banco">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">banco.</span></span><span class="sig-name descname"><span class="pre">Banco</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">senha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/banco.html#Banco"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#banco.Banco" title="Permalink to this definition"></a></dt>
+<dd><p>A classe Banco instancia um objeto Banco capaz de acessar um banco de dados para registro e recuperação de dados de contas bancárias, além de realização de transações financeiras, como saques, depósitos e transferências.</p>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>__slots__<span class="classifier">list</span></dt><dd><p>Define todos os atributos que podem ser criados na classe.</p>
+</dd>
+<dt>bd: objeto de Database()</dt><dd><p>Armazena uma instância da classe Database que possui as operaçõesque podem ser executadas no banco de dados.</p>
+</dd>
+<dt>sinc: objeto de threading.Lock()</dt><dd><p>controla o acesso simultâneo de threads.</p>
+</dd>
+</dl>
+</section>
+<section id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>add_conta(self, usuario, senha, nome, cpf)</dt><dd><p>Verifica se já existe uma conta com CPF e usuario, caso não, cria a conta.</p>
+</dd>
+<dt>login(self, usuario, senha)</dt><dd><p>Verifica se os dados inseridos pelo usuário correspondem para uma conta e retorna o nome, saldo, numero do usuário se a conta existir.</p>
+</dd>
+<dt>verificarSaldo(self, numero)</dt><dd><p>Verifica o saldo de uma conta e o retorna.</p>
+</dd>
+<dt>depositar(self,  numero, valor, NoHis=True)</dt><dd><p>Deposita o valor em sua conta bancária.</p>
+</dd>
+<dt>sacar(self, numero, valor, senha, NoHis=True)</dt><dd><p>Retirar um valor de uma conta bancária.</p>
+</dd>
+<dt>transferir(self, numero, senha, destino, valor)</dt><dd><p>Faz a transferência do valor da conta remetente para a conta destino.</p>
+</dd>
+<dt>historico(self, numero)</dt><dd><p>Retorna uma string com o histórico de todas as transações realizado na conta.</p>
+</dd>
+<dt>excluirConta(self, numero, senha=None)</dt><dd><p>Faz a exclusão de uma conta.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="banco.Banco.add_conta">
+<span class="sig-name descname"><span class="pre">add_conta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usuario</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">senha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nome</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/banco.html#Banco.add_conta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#banco.Banco.add_conta" title="Permalink to this definition"></a></dt>
+<dd><p>verifique se já existe uma conta com esse CPF e usuario caso não, crie a conta.</p>
+<section id="parameters">
+<h3>parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>usuario: str</dt><dd><p>Usuario da conta</p>
+</dd>
+<dt>senha: str</dt><dd><p>Senha de acesso à conta.</p>
+</dd>
+<dt>nome: str</dt><dd><p>Nome do titular da conta.</p>
+</dd>
+<dt>CPF: Str</dt><dd><p>CPF do titular da conta.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>Sucesso: Retorna True e uma string com informação que a conta foi criada.
+Falha: Retorna Falso e uma string com informação que a conta não foi criada.</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="banco.Banco.depositar">
+<span class="sig-name descname"><span class="pre">depositar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numero</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NoHis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/banco.html#Banco.depositar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#banco.Banco.depositar" title="Permalink to this definition"></a></dt>
+<dd><p>Deposita o valor na conta bancária.</p>
+<section id="id1">
+<h3>parameters<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>numero: int</dt><dd><p>Numero da conta bancária</p>
+</dd>
+<dt>valor: str</dt><dd><p>Valor a ser depositado.</p>
+</dd>
+<dt>NoHis: Boolean</dt><dd><p>Valor booleano para identificar se a transação se refere a um depósito
+ou uma transferência, pois a função de depósito é usada também no 
+processo de transferência.</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Returns<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>Successo: Retorna True e uma string com informação sobre o sucesso do deposito.
+Falha: Retorna Falso e uma string com informação sobre a falha do deposito.</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="banco.Banco.excluirConta">
+<span class="sig-name descname"><span class="pre">excluirConta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numero</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">senha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/banco.html#Banco.excluirConta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#banco.Banco.excluirConta" title="Permalink to this definition"></a></dt>
+<dd><p>Faz a exclusão da conta bancária.</p>
+<section id="id3">
+<h3>parameters<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>numero: str</dt><dd><p>Numero da conta bancária remetente.</p>
+</dd>
+<dt>senha: str</dt><dd><p>Senha de acesso à conta.</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h3>returns<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>retorna None.</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="banco.Banco.historico">
+<span class="sig-name descname"><span class="pre">historico</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numero</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/banco.html#Banco.historico"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#banco.Banco.historico" title="Permalink to this definition"></a></dt>
+<dd><p>Retorna uma string com o histórico de todas as transações realizado na conta.</p>
+<section id="id5">
+<h3>parameters<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>numero: str</dt><dd><p>Numero da conta bancária.</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h3>returns<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>retorna o histórico da conta.</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="banco.Banco.login">
+<span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usuario</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">senha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/banco.html#Banco.login"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#banco.Banco.login" title="Permalink to this definition"></a></dt>
+<dd><p>Verifica se os dados inseridos pelo usuário correspondem para uma 
+conta e retorna nome, saldo, numero do usuário se a conta existir.</p>
+<section id="id7">
+<h3>parameters<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>usuario: str</dt><dd><p>Usuario da conta.</p>
+</dd>
+<dt>senha: str</dt><dd><p>Senha de acesso à conta.</p>
+</dd>
+</dl>
+</section>
+<section id="id8">
+<h3>returns<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>Sucesso: Retorna o nome, saldo, numero da conta bancária.
+Falha: Retorna Falso.</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="banco.Banco.sacar">
+<span class="sig-name descname"><span class="pre">sacar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numero</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">senha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NoHis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/banco.html#Banco.sacar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#banco.Banco.sacar" title="Permalink to this definition"></a></dt>
+<dd><p>Sacar de uma conta bancária.</p>
+<section id="id9">
+<h3>parameters<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>numero: str</dt><dd><p>Numero da conta bancária</p>
+</dd>
+<dt>valor: str</dt><dd><p>Valor a ser depositado.</p>
+</dd>
+<dt>senha: str</dt><dd><p>Senha de acesso à conta.</p>
+</dd>
+<dt>NoHis: Boolean</dt><dd><p>Valor booleano para identificar se a transação se refere a um saque
+ou uma transferência, pois a função de saque é usada também no 
+processo de transferência.</p>
+</dd>
+</dl>
+</section>
+<section id="id10">
+<h3>Returns<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>Successo: Retorna True e uma string com informação sobre o sucesso do saque.
+Falha: Retorna Falso e uma string com informação sobre a falha do saque.</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="banco.Banco.transferir">
+<span class="sig-name descname"><span class="pre">transferir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numero</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">senha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destino</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/banco.html#Banco.transferir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#banco.Banco.transferir" title="Permalink to this definition"></a></dt>
+<dd><p>Faz a transferência do valor da conta remetente para uma conta destino.</p>
+<section id="id11">
+<h3>parameters<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>numero: str</dt><dd><p>Numero da conta bancária remetente.</p>
+</dd>
+<dt>senha: str</dt><dd><p>Senha de acesso à conta.</p>
+</dd>
+<dt>destino: str</dt><dd><p>Numero da conta bancária alvo.</p>
+</dd>
+<dt>Valor: str</dt><dd><p>valor da transferência</p>
+</dd>
+</dl>
+</section>
+<section id="id12">
+<h3>Returns<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>Successo: Retorna True e uma string com informação sobre o sucesso da transferência.
+Falha: Retorna Falso e uma string com informação sobre a falha da transferência.</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="module4.html" class="btn btn-neutral float-left" title="Servidor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="module6.html" class="btn btn-neutral float-right" title="Dabase SQL" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Willians Silva Filipe Silva.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

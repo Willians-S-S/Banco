@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-br" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>banco &mdash; Banco Will 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Banco Will
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Aaa</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Banco Will</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">banco</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for banco</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">sql</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="Banco"><a class="viewcode-back" href="../module5.html#banco.Banco">[docs]</a><span class="k">class</span> <span class="nc">Banco</span><span class="p">():</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A classe Banco instancia um objeto Banco capaz de acessar um banco de dados para registro </span>
+<span class="sd">        e recuperação de dados de contas bancárias, além de realização de transações financeiras, </span>
+<span class="sd">        como saques, depósitos e transferências.</span>
+
+<span class="sd">        Attributes</span>
+<span class="sd">        ----------</span>
+<span class="sd">        __slots__ : list</span>
+<span class="sd">            Define todos os atributos que podem ser criados na classe.</span>
+<span class="sd">        bd: objeto de Database()</span>
+<span class="sd">            Armazena uma instância da classe Database que possui as operaçõesque podem ser executadas no banco de dados.</span>
+<span class="sd">        sinc: objeto de threading.Lock()</span>
+<span class="sd">            controla o acesso simultâneo de threads.</span>
+
+<span class="sd">        Methods</span>
+<span class="sd">        -------</span>
+<span class="sd">        add_conta(self, usuario, senha, nome, cpf)</span>
+<span class="sd">            Verifica se já existe uma conta com CPF e usuario, caso não, cria a conta.</span>
+
+<span class="sd">        login(self, usuario, senha)</span>
+<span class="sd">            Verifica se os dados inseridos pelo usuário correspondem para uma conta e retorna o nome, saldo, numero </span>
+<span class="sd">            do usuário se a conta existir.</span>
+
+<span class="sd">        verificarSaldo(self, numero)</span>
+<span class="sd">            Verifica o saldo de uma conta e o retorna.</span>
+
+<span class="sd">        depositar(self,  numero, valor, NoHis=True)</span>
+<span class="sd">            Deposita o valor em sua conta bancária.</span>
+
+<span class="sd">        sacar(self, numero, valor, senha, NoHis=True)</span>
+<span class="sd">            Retirar um valor de uma conta bancária.</span>
+
+<span class="sd">        transferir(self, numero, senha, destino, valor)</span>
+<span class="sd">            Faz a transferência do valor da conta remetente para a conta destino.</span>
+
+<span class="sd">        historico(self, numero)</span>
+<span class="sd">            Retorna uma string com o histórico de todas as transações realizado na conta.</span>
+
+<span class="sd">        excluirConta(self, numero, senha=None)</span>
+<span class="sd">            Faz a exclusão de uma conta.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;bd&#39;</span><span class="p">,</span> <span class="s1">&#39;sinc&#39;</span><span class="p">,</span> <span class="s1">&#39;numero&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">senha</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bd</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="n">senha</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sinc</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Banco.add_conta"><a class="viewcode-back" href="../module5.html#banco.Banco.add_conta">[docs]</a>    <span class="k">def</span> <span class="nf">add_conta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usuario</span><span class="p">,</span> <span class="n">senha</span><span class="p">,</span> <span class="n">nome</span><span class="p">,</span> <span class="n">cpf</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            verifique se já existe uma conta com esse CPF e usuario caso não, crie a conta.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            usuario: str</span>
+<span class="sd">                Usuario da conta</span>
+<span class="sd">            senha: str</span>
+<span class="sd">                Senha de acesso à conta.</span>
+<span class="sd">            nome: str</span>
+<span class="sd">                Nome do titular da conta.</span>
+<span class="sd">            CPF: Str</span>
+<span class="sd">                CPF do titular da conta.</span>
+<span class="sd">            </span>
+<span class="sd">            returns</span>
+<span class="sd">            -------</span>
+<span class="sd">                Sucesso: Retorna True e uma string com informação que a conta foi criada.</span>
+<span class="sd">                Falha: Retorna Falso e uma string com informação que a conta não foi criada.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">verificarCPF</span><span class="p">(</span><span class="n">cpf</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">verificarUsuario</span><span class="p">(</span><span class="n">usuario</span><span class="p">):</span>
+                    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                        <span class="n">numero</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">999</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">verificarNumero</span><span class="p">(</span><span class="n">numero</span><span class="p">):</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">numero</span> <span class="o">=</span> <span class="n">numero</span>
+                            <span class="k">break</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sinc</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">cadastrar</span><span class="p">(</span><span class="n">usuario</span><span class="p">,</span> <span class="n">numero</span><span class="p">,</span> <span class="n">senha</span><span class="p">,</span> <span class="n">nome</span><span class="p">,</span> <span class="n">cpf</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sinc</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+                    <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;Cadastro realizado com sucesso.&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;Usuário já estar cadastrado.&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;CPF já estar cadastrado.&#39;</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="Banco.login"><a class="viewcode-back" href="../module5.html#banco.Banco.login">[docs]</a>    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usuario</span><span class="p">,</span> <span class="n">senha</span><span class="p">):</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Verifica se os dados inseridos pelo usuário correspondem para uma </span>
+<span class="sd">            conta e retorna nome, saldo, numero do usuário se a conta existir.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            usuario: str</span>
+<span class="sd">                Usuario da conta.</span>
+<span class="sd">            senha: str</span>
+<span class="sd">                Senha de acesso à conta.</span>
+
+<span class="sd">            returns</span>
+<span class="sd">            -------</span>
+<span class="sd">                Sucesso: Retorna o nome, saldo, numero da conta bancária.</span>
+<span class="sd">                Falha: Retorna Falso.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">verificarUsuario</span><span class="p">(</span><span class="n">usuario</span><span class="p">,</span> <span class="n">senha</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">enterAccount</span><span class="p">(</span><span class="n">usuario</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">b</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">flag</span></div>
+
+    <span class="k">def</span> <span class="nf">verificarSaldo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numero</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">get_saldo</span><span class="p">(</span><span class="n">numero</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Banco.depositar"><a class="viewcode-back" href="../module5.html#banco.Banco.depositar">[docs]</a>    <span class="k">def</span> <span class="nf">depositar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  <span class="n">numero</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="n">NoHis</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Deposita o valor na conta bancária.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            numero: int</span>
+<span class="sd">                Numero da conta bancária</span>
+<span class="sd">            valor: str</span>
+<span class="sd">                Valor a ser depositado.</span>
+<span class="sd">            NoHis: Boolean</span>
+<span class="sd">                Valor booleano para identificar se a transação se refere a um depósito</span>
+<span class="sd">                ou uma transferência, pois a função de depósito é usada também no </span>
+<span class="sd">                processo de transferência.</span>
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">                Successo: Retorna True e uma string com informação sobre o sucesso do deposito.</span>
+<span class="sd">                Falha: Retorna Falso e uma string com informação sobre a falha do deposito.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">valor</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">valor</span><span class="p">)</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">get_saldo</span><span class="p">(</span><span class="n">numero</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Limite </span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="si">}</span><span class="s2"> saldo </span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Valor &#39;</span><span class="p">,</span><span class="n">valor</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">valor</span> <span class="ow">or</span> <span class="n">valor</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">float</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">valor</span> <span class="o">&gt;</span> <span class="nb">float</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Não foi possível fazer o deposito.&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sinc</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">set_saldo</span><span class="p">(</span><span class="n">numero</span><span class="p">,</span> <span class="n">valor</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%y %H:%M&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">NoHis</span><span class="p">:</span>
+                <span class="n">his</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot; Deposito:</span><span class="se">\n</span><span class="s2">      Valor: </span><span class="si">{</span><span class="n">valor</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="se">\n</span><span class="s2">       Data: </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">set_historico</span><span class="p">(</span><span class="n">numero</span><span class="p">,</span> <span class="n">his</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sinc</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;Deposito realizado com sucesso.&quot;</span></div>
+
+<div class="viewcode-block" id="Banco.sacar"><a class="viewcode-back" href="../module5.html#banco.Banco.sacar">[docs]</a>    <span class="k">def</span> <span class="nf">sacar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numero</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="n">senha</span><span class="p">,</span> <span class="n">NoHis</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Sacar de uma conta bancária.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            numero: str</span>
+<span class="sd">                Numero da conta bancária</span>
+<span class="sd">            valor: str</span>
+<span class="sd">                Valor a ser depositado.</span>
+<span class="sd">            senha: str</span>
+<span class="sd">                Senha de acesso à conta.</span>
+<span class="sd">            NoHis: Boolean</span>
+<span class="sd">                Valor booleano para identificar se a transação se refere a um saque</span>
+<span class="sd">                ou uma transferência, pois a função de saque é usada também no </span>
+<span class="sd">                processo de transferência.</span>
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">                Successo: Retorna True e uma string com informação sobre o sucesso do saque.</span>
+<span class="sd">                Falha: Retorna Falso e uma string com informação sobre a falha do saque.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">valor</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">valor</span><span class="p">)</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">get_saldo</span><span class="p">(</span><span class="n">numero</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">valor</span> <span class="o">&gt;</span> <span class="nb">float</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> <span class="n">valor</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Valor maior que o saldo ou valor menor que 0.&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">verificaSenha</span><span class="p">(</span><span class="n">senha</span><span class="p">,</span> <span class="n">numero</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sinc</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">set_saldo</span><span class="p">(</span><span class="n">numero</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">NoHis</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%y %H:%M&quot;</span><span class="p">)</span>
+                    <span class="n">his</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot; Saque:</span><span class="se">\n</span><span class="s2">      Valor: </span><span class="si">{</span><span class="n">valor</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="se">\n</span><span class="s2">       Data: </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">set_historico</span><span class="p">(</span><span class="n">numero</span><span class="p">,</span> <span class="n">his</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sinc</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+                <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;Saque realizado com sucesso.&quot;</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Senha invalida.&quot;</span></div>
+
+<div class="viewcode-block" id="Banco.transferir"><a class="viewcode-back" href="../module5.html#banco.Banco.transferir">[docs]</a>    <span class="k">def</span> <span class="nf">transferir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numero</span><span class="p">,</span> <span class="n">senha</span><span class="p">,</span> <span class="n">destino</span><span class="p">,</span> <span class="n">valor</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Faz a transferência do valor da conta remetente para uma conta destino.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            numero: str</span>
+<span class="sd">                Numero da conta bancária remetente.</span>
+<span class="sd">            senha: str</span>
+<span class="sd">                Senha de acesso à conta.</span>
+<span class="sd">            destino: str</span>
+<span class="sd">                Numero da conta bancária alvo.</span>
+<span class="sd">            Valor: str</span>
+<span class="sd">                valor da transferência</span>
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">                Successo: Retorna True e uma string com informação sobre o sucesso da transferência.</span>
+<span class="sd">                Falha: Retorna Falso e uma string com informação sobre a falha da transferência.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">valor</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">valor</span><span class="p">)</span>
+        <span class="n">retirou</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sacar</span><span class="p">(</span><span class="n">numero</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="n">senha</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">retirou</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">depositar</span><span class="p">(</span><span class="n">destino</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%y %H:%M&quot;</span><span class="p">)</span>
+            <span class="n">his</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot; Transferencia:</span><span class="se">\n</span><span class="s2">       Enviou para: </span><span class="si">{</span><span class="n">destino</span><span class="si">}</span><span class="se">\n</span><span class="s2">       Valor: </span><span class="si">{</span><span class="n">valor</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="se">\n</span><span class="s2">       Data: </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sinc</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">set_historico</span><span class="p">(</span><span class="n">numero</span><span class="p">,</span> <span class="n">his</span><span class="p">)</span>
+            <span class="n">his</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot; Transferencia:</span><span class="se">\n</span><span class="s2">       Recebeu de: </span><span class="si">{</span><span class="n">numero</span><span class="si">}</span><span class="se">\n</span><span class="s2">       Valor: </span><span class="si">{</span><span class="n">valor</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="se">\n</span><span class="s2">       Data: </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">set_historico</span><span class="p">(</span><span class="n">destino</span><span class="p">,</span> <span class="n">his</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sinc</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;Transferencia realizada com sucesso.&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Não foi possivel finalizar a transferencia.&quot;</span></div>
+    
+<div class="viewcode-block" id="Banco.historico"><a class="viewcode-back" href="../module5.html#banco.Banco.historico">[docs]</a>    <span class="k">def</span> <span class="nf">historico</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numero</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Retorna uma string com o histórico de todas as transações realizado na conta.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            numero: str</span>
+<span class="sd">                Numero da conta bancária.</span>
+<span class="sd">            returns</span>
+<span class="sd">            -------</span>
+<span class="sd">                retorna o histórico da conta.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bd</span><span class="o">.</span><span class="n">get_historico</span><span class="p">(</span><span class="n">numero</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Banco.excluirConta"><a class="viewcode-back" href="../module5.html#banco.Banco.excluirConta">[docs]</a>    <span class="k">def</span> <span class="nf">excluirConta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numero</span><span class="p">,</span> <span class="n">senha</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Faz a exclusão da conta bancária.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            numero: str</span>
+<span class="sd">                Numero da conta bancária remetente.</span>
+<span class="sd">            senha: str</span>
+<span class="sd">                Senha de acesso à conta.</span>
+<span class="sd">            </span>
+<span class="sd">            returns</span>
+<span class="sd">            -------</span>
+<span class="sd">                retorna None.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sinc</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Numero </span><span class="si">{</span><span class="n">numero</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;DELETE FROM cliente WHERE numero = </span><span class="si">{</span><span class="n">numero</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sinc</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Willians Silva Filipe Silva.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

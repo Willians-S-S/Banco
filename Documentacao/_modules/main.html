@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-br" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>main &mdash; Banco Will 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Banco Will
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Aaa</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Banco Will</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">main</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for main</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtWidgets</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="n">QMainWindow</span><span class="p">,</span> <span class="n">QApplication</span><span class="p">,</span> <span class="n">QMessageBox</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">server_cliente</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">md5</span>
+
+<span class="kn">from</span> <span class="nn">Tela_Inicial</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Tela_Cadastro</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Tela_Login</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Tela_Principal</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Tela_Deposito</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Tela_Saque</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Tela_Transferir</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Tela_Historico</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="Ui_Main"><a class="viewcode-back" href="../module1.html#main.Ui_Main">[docs]</a><span class="k">class</span> <span class="nc">Ui_Main</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+<div class="viewcode-block" id="Ui_Main.setupUi"><a class="viewcode-back" href="../module1.html#main.Ui_Main.setupUi">[docs]</a>    <span class="k">def</span> <span class="nf">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Main</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Esta classe define a interface gráfica do usuário usando PyQt5. </span>
+<span class="sd">        Ele define uma janela principal (Main) e um layout de pilha de várias outras janelas (stack0 a stack7) </span>
+<span class="sd">        que podem ser alternadas dentro da janelaprincipal. </span>
+<span class="sd">        Cada tela é definida em seu próprio arquivo de classe, como TelaCadastro, TelaLogin etc. </span>
+<span class="sd">        O método setupUi() é chamado para cada tela para configurar sua aparência e funcionamento, </span>
+<span class="sd">        e cada uma delas é adicionada ao layout de pilha por meio do método addWidget().</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        Main: Object</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">Main</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s1">&#39;Main&#39;</span><span class="p">)</span>
+        <span class="n">Main</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span> <span class="mi">480</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QStackedLayout</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack0</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack1</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack2</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack3</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack4</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack5</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack6</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack7</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Inicial</span> <span class="o">=</span> <span class="n">TelaInicial</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Inicial</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span> <span class="o">=</span> <span class="n">TelaCadastro</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Login</span> <span class="o">=</span> <span class="n">TelaLogin</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Login</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Principal</span> <span class="o">=</span> <span class="n">TelaPrincipal</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Principal</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack3</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Deposito</span> <span class="o">=</span> <span class="n">TelaDeposito</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Deposito</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack4</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Saque</span> <span class="o">=</span> <span class="n">TelaSaque</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Saque</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack5</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Transferir</span> <span class="o">=</span> <span class="n">TelaTransferir</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Transferir</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack6</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Historico</span> <span class="o">=</span> <span class="n">TelaHistorico</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Historico</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack7</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack6</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stack7</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Main"><a class="viewcode-back" href="../module1.html#main.Main">[docs]</a><span class="k">class</span> <span class="nc">Main</span><span class="p">(</span><span class="n">QMainWindow</span><span class="p">,</span> <span class="n">Ui_Main</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Main</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Esse trecho de código tenta se conectar a um servidor na máquina com o endereço IP &#39;10.0.0.102&#39; e a porta 8005. Se a conexão for recusada, </span>
+<span class="sd">        uma caixa de mensagem será exibida informando que não foi possível se conectar ao servidor e a aplicação será encerrada usando sys.exit().</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server_cliente</span><span class="p">(</span><span class="s1">&#39;10.0.0.102&#39;</span><span class="p">,</span> <span class="mi">8005</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ConnectionRefusedError</span><span class="p">:</span>
+            <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;ERROR&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Não foi possível conectar ao servidor.&#39;</span>
+                                                            <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Verifique a conexão e tente novamente&#39;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Este trecho de código define as conexões de sinal e slot para vários botões da interface do usuário. </span>
+<span class="sd">        Cada vez que um botão é clicado, ele chama a função correspondente que executa uma determinada ação. </span>
+<span class="sd">        Por exemplo, ao clicar no botão &#39;ButtonLogin&#39; em &#39;Tela_Login&#39;, o método &#39;BotaoLogin&#39; é chamado.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Inicial</span><span class="o">.</span><span class="n">ButtonCadastrar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoParaTelaCadastro</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Inicial</span><span class="o">.</span><span class="n">ButtonLogin</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoParaTelaLogin</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Inicial</span><span class="o">.</span><span class="n">ButtonSair</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sair</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">ButtonCadastrar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoCadastrar</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">ButtonVoltar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoVoltarTelaInicial</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Login</span><span class="o">.</span><span class="n">ButtonLogin</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoLogin</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Login</span><span class="o">.</span><span class="n">ButtonVoltar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoVoltarTelaInicial</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Principal</span><span class="o">.</span><span class="n">ButtonAtualizar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoAtualizar</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Principal</span><span class="o">.</span><span class="n">ButtonDepositar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoParaTelaDeposito</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Principal</span><span class="o">.</span><span class="n">ButtonSacar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoParaTelaSacar</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Principal</span><span class="o">.</span><span class="n">ButtonTransferir</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoParaTelaTransferir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Principal</span><span class="o">.</span><span class="n">ButtonSair</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoVoltarTelaInicial</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Principal</span><span class="o">.</span><span class="n">ButtonHistorico</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoParaTelaHistorico</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Principal</span><span class="o">.</span><span class="n">ButtonExcluir</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoExcluir</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Deposito</span><span class="o">.</span><span class="n">ButtonDepositar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoDepoistar</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Deposito</span><span class="o">.</span><span class="n">ButtonVoltar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoParaTelaPrincipal</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Saque</span><span class="o">.</span><span class="n">ButtonSacar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoSacar</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Saque</span><span class="o">.</span><span class="n">ButtonVoltar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoParaTelaPrincipal</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Transferir</span><span class="o">.</span><span class="n">ButtonTransferir</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoTransferir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Transferir</span><span class="o">.</span><span class="n">ButtonVoltar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoParaTelaPrincipal</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Historico</span><span class="o">.</span><span class="n">ButtonVoltar</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BotaoParaTelaPrincipal</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Main.sair"><a class="viewcode-back" href="../module1.html#main.Main.sair">[docs]</a>    <span class="k">def</span> <span class="nf">sair</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Botão para sair do sistema.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request_server</span><span class="p">(</span><span class="s1">&#39;sair&#39;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Main.BotaoVoltarTelaInicial"><a class="viewcode-back" href="../module1.html#main.Main.BotaoVoltarTelaInicial">[docs]</a>    <span class="k">def</span> <span class="nf">BotaoVoltarTelaInicial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Botão que volta para a tela inicial do sistema.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Login</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Main.BotaoParaTelaCadastro"><a class="viewcode-back" href="../module1.html#main.Main.BotaoParaTelaCadastro">[docs]</a>    <span class="k">def</span> <span class="nf">BotaoParaTelaCadastro</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Botão para abrir a tela de cadastro.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Main.BotaoParaTelaLogin"><a class="viewcode-back" href="../module1.html#main.Main.BotaoParaTelaLogin">[docs]</a>    <span class="k">def</span> <span class="nf">BotaoParaTelaLogin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Botão para abrir a tela de login.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Main.BotaoParaTelaPrincipal"><a class="viewcode-back" href="../module1.html#main.Main.BotaoParaTelaPrincipal">[docs]</a>    <span class="k">def</span> <span class="nf">BotaoParaTelaPrincipal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Botão para a tela do menu do usuario. </span>
+<span class="sd">        ele limpa o campo de notificação da tela de principal, em seguida altera a tela atual do sistema para a tela principal.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Deposito</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Saque</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Main.BotaoParaTelaDeposito"><a class="viewcode-back" href="../module1.html#main.Main.BotaoParaTelaDeposito">[docs]</a>    <span class="k">def</span> <span class="nf">BotaoParaTelaDeposito</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Botão para a tela de deposito, </span>
+<span class="sd">        ele limpa o campo de notificação da tela de deposito, em seguida altera a tela atual do sistema para a tela de deposito.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Deposito</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Main.BotaoParaTelaSacar"><a class="viewcode-back" href="../module1.html#main.Main.BotaoParaTelaSacar">[docs]</a>    <span class="k">def</span> <span class="nf">BotaoParaTelaSacar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Botão para a tela sacar, </span>
+<span class="sd">        ele limpa o campo de notificação da tela de saque, em seguida altera a tela atual do sistema para a tela de deposito.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Saque</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Main.BotaoParaTelaTransferir"><a class="viewcode-back" href="../module1.html#main.Main.BotaoParaTelaTransferir">[docs]</a>    <span class="k">def</span> <span class="nf">BotaoParaTelaTransferir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Botão para a tela transferir, </span>
+<span class="sd">        ele limpa o campo de notificação da tela transferir, em seguida altera a tela atual do sistema para a tela de transferir.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Transferir</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Main.request_server"><a class="viewcode-back" href="../module1.html#main.Main.request_server">[docs]</a>    <span class="k">def</span> <span class="nf">request_server</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Essa função envia uma requisição de mensagem para o servidor com a request como parâmetro. </span>
+<span class="sd">        Em seguida, aguarda uma resposta de até 2048 bytes do servidor e a converte em uma string. </span>
+<span class="sd">        Então, remove todos os caracteres desnecessários da resposta e retorna como uma lista de palavras.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        request :Str</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        flag</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+        <span class="n">recv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">2048</span><span class="p">)</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="n">recv</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="n">flag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">flag</span></div>
+    
+
+<div class="viewcode-block" id="Main.concatenar"><a class="viewcode-back" href="../module1.html#main.Main.concatenar">[docs]</a>    <span class="k">def</span> <span class="nf">concatenar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Este é um método chamado concatenar que recebe uma string como entrada e concatena todos os caracteres da string, </span>
+<span class="sd">        exceto o primeiro caractere (índice 0), com um caractere de espaço entre cada caractere.</span>
+<span class="sd">        A string concatenada resultante é então retornada.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        string: Str</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        noti</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">noti</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)):</span>
+            <span class="n">noti</span> <span class="o">+=</span> <span class="n">string</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span>
+        <span class="k">return</span> <span class="n">noti</span></div>
+
+<div class="viewcode-block" id="Main.BotaoCadastrar"><a class="viewcode-back" href="../module1.html#main.Main.BotaoCadastrar">[docs]</a>    <span class="k">def</span> <span class="nf">BotaoCadastrar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Este é um método chamado BotaoCadastrar que é acionado quando o botão &quot;Cadastrar&quot; é clicado na tela de cadastro. </span>
+<span class="sd">        Ele recupera os valores dos campos de entrada para nome, cpf, </span>
+<span class="sd">        usuário e senha da tela de cadastro e verifica se todos os campos estão preenchidos. </span>
+<span class="sd">        Se algum campo estiver vazio, uma notificação será exibida na tela.</span>
+
+<span class="sd">        Se todos os campos estiverem preenchidos, o código verifica se o CPF tem 11 dígitos e se é composto apenas por números. </span>
+<span class="sd">        Em seguida, a senha é codificada em utf-8 e criptografada usando o algoritmo MD5. </span>
+<span class="sd">        Uma solicitação é enviada ao servidor contendo as informações do novo usuário a ser adicionado. </span>
+<span class="sd">        A resposta do servidor é concatenada em uma string e exibida na tela de cadastro.</span>
+
+<span class="sd">        Independentemente de ter sucesso ou falhar, todos os campos da tela de cadastro são limpos para que um novo usuário possa ser adicionado. </span>
+<span class="sd">        Se o CPF não atender aos parâmetros necessários, uma notificação informando isso é exibida na tela</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">nome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">lineNome</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">cpf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">lineCpf</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">usuario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">lineUsuario</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">senha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">lineSenha</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">nome</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">cpf</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">usuario</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">senha</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cpf</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">cpf</span><span class="p">)</span> <span class="o">==</span> <span class="mi">11</span><span class="p">:</span>
+                <span class="n">senha</span> <span class="o">=</span> <span class="n">senha</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+                <span class="n">senha</span> <span class="o">=</span> <span class="n">md5</span><span class="p">(</span><span class="n">senha</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+                <span class="n">solicit</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;add_conta*</span><span class="si">{</span><span class="n">usuario</span><span class="si">}</span><span class="s1">*</span><span class="si">{</span><span class="n">senha</span><span class="si">}</span><span class="s1">*</span><span class="si">{</span><span class="n">nome</span><span class="si">}</span><span class="s1">*</span><span class="si">{</span><span class="n">cpf</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_server</span><span class="p">(</span><span class="n">solicit</span><span class="p">)</span>
+                <span class="n">noti</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">concatenar</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">lineNome</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">lineCpf</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">lineUsuario</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">lineSenha</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">noti</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;O CPF não atendo os parametros.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Todos os espaços devem ser preenchidos.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">lineNome</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">lineCpf</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">lineUsuario</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Cadastro</span><span class="o">.</span><span class="n">lineSenha</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Main.BotaoLogin"><a class="viewcode-back" href="../module1.html#main.Main.BotaoLogin">[docs]</a>    <span class="k">def</span> <span class="nf">BotaoLogin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Este é um método chamado BotaoLogin que é acionado quando o botão &quot;Login&quot; é clicado na tela de login. </span>
+<span class="sd">        Ele recupera os valores dos campos de entrada para usuário e senha da tela de login e verifica se ambos estão preenchidos. </span>
+<span class="sd">        Se algum campo estiver vazio, uma notificação será exibida na tela.</span>
+
+<span class="sd">        Se ambos os campos estiverem preenchidos, o código codifica a senha em utf-8 e a criptografa usando o algoritmo MD5. </span>
+<span class="sd">        Em seguida, é criada uma solicitação contendo as informações de login do usuário e enviada para o servidor. </span>
+<span class="sd">        A resposta do servidor é recebida e processada. </span>
+<span class="sd">        Se o primeiro elemento da resposta for &#39;True&#39;, o login é bem-sucedido e o usuário é direcionado para a tela principal do sistema.</span>
+
+<span class="sd">        Caso contrário, uma notificação informando que o login falhou é exibida na tela de login. </span>
+<span class="sd">        Independentemente de ter sucesso ou falhar, os campos da tela de login são limpos para que um novo login possa ser feito.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">usuario</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Login</span><span class="o">.</span><span class="n">lineUsuario</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">senha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Login</span><span class="o">.</span><span class="n">lineSenha</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">usuario</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">senha</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">senha</span> <span class="o">=</span> <span class="n">senha</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+            <span class="n">senha</span> <span class="o">=</span> <span class="n">md5</span><span class="p">(</span><span class="n">senha</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Senha: &#39;</span><span class="p">,</span><span class="n">senha</span><span class="p">)</span>
+            <span class="n">solicit</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;login*</span><span class="si">{</span><span class="n">usuario</span><span class="si">}</span><span class="s1">*</span><span class="si">{</span><span class="n">senha</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="c1"># flag = self.request_server(solicit)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">solicit</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+            <span class="n">recv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">2048</span><span class="p">)</span>
+            <span class="n">flag4</span> <span class="o">=</span> <span class="n">recv</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+            <span class="n">flag4</span> <span class="o">=</span> <span class="n">flag4</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">flag4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;True&#39;</span><span class="p">:</span>
+                
+                <span class="bp">self</span><span class="o">.</span><span class="n">numero</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">flag4</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Principal</span><span class="o">.</span><span class="n">labelNome</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Olá, </span><span class="si">{</span><span class="n">flag4</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Principal</span><span class="o">.</span><span class="n">labelSaldo</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R$ </span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">flag4</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Principal</span><span class="o">.</span><span class="n">labelNumero</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Conta </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">flag4</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">noti4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">concatenar</span><span class="p">(</span><span class="n">flag4</span><span class="p">)</span>
+                <span class="c1"># caralho = str(flag4)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Login</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">noti4</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Login</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Todos os espaços devem ser preenchidos.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Login</span><span class="o">.</span><span class="n">lineUsuario</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Login</span><span class="o">.</span><span class="n">lineSenha</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Main.BotaoAtualizar"><a class="viewcode-back" href="../module1.html#main.Main.BotaoAtualizar">[docs]</a>    <span class="k">def</span> <span class="nf">BotaoAtualizar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Este é um método chamado BotaoAtualizar que é acionado quando o botão &quot;Atualizar&quot; é clicado na tela principal do sistema. </span>
+<span class="sd">        Ele cria uma solicitação contendo o número da conta do usuário e o tipo de solicitação, que é &quot;verificarSaldo&quot;, e envia essa solicitação para o servidor.</span>
+
+<span class="sd">        Em seguida, ele recebe uma resposta do servidor contendo o saldo atualizado da conta. </span>
+<span class="sd">        O saldo é formatado como um número de ponto flutuante com duas casas decimais e exibido na tela principal do sistema, </span>
+<span class="sd">        na label denominada &quot;labelSaldo&quot;.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">solicit</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;verificarSaldo*</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numero</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_server</span><span class="p">(</span><span class="n">solicit</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Principal</span><span class="o">.</span><span class="n">labelSaldo</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R$ </span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Main.BotaoDepoistar"><a class="viewcode-back" href="../module1.html#main.Main.BotaoDepoistar">[docs]</a>    <span class="k">def</span> <span class="nf">BotaoDepoistar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Este é um método chamado BotaoDepoistar que é acionado quando o botão &quot;Depositar&quot; é clicado na tela de depósito. </span>
+<span class="sd">        Ele verifica se o campo de valor não está vazio e se contém apenas dígitos. </span>
+<span class="sd">        Se for o caso, uma solicitação de depósito é enviada ao servidor com o número da conta e o valor do depósito. </span>
+<span class="sd">        O campo de notificação da tela de depósito é atualizado com a mensagem retornada pelo servidor e, em seguida, o campo de valor é limpo. </span>
+<span class="sd">        Se o campo de valor estiver vazio ou não contiver apenas dígitos, uma mensagem apropriada é exibida no campo de notificação.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">valor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Deposito</span><span class="o">.</span><span class="n">lineSaldo</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">valor</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">valor</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                <span class="n">solicit</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;depositar*</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numero</span><span class="si">}</span><span class="s1">*</span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">valor</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_server</span><span class="p">(</span><span class="n">solicit</span><span class="p">)</span>
+                <span class="n">noti</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">concatenar</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Deposito</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">noti</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Deposito</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Informe somente números.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Deposito</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Todos os espaços devem ser preenchidos.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Deposito</span><span class="o">.</span><span class="n">lineSaldo</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Main.BotaoSacar"><a class="viewcode-back" href="../module1.html#main.Main.BotaoSacar">[docs]</a>    <span class="k">def</span> <span class="nf">BotaoSacar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        O método BotaoSacar é chamado quando o usuário clica no botão &quot;Sacar&quot; na tela de operações. </span>
+<span class="sd">        Ele pega o valor e a senha inseridos pelo usuário, verifica se o valor é um número válido e codifica a senha usando o algoritmo MD5. </span>
+<span class="sd">        Em seguida, constrói uma mensagem com o número da conta, o valor e a senha codificada e envia uma solicitação ao servidor. </span>
+<span class="sd">        Se a operação for bem-sucedida, uma mensagem de notificação é exibida na tela de operações, caso contrário, </span>
+<span class="sd">        uma mensagem de senha inválida é exibida. Por fim, os campos de valor e senha são limpos.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">valor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Saque</span><span class="o">.</span><span class="n">lineSaldo</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">senha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Saque</span><span class="o">.</span><span class="n">lineSenha</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">valor</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">senha</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">valor</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                <span class="n">senha</span> <span class="o">=</span> <span class="n">senha</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+                <span class="n">senha</span> <span class="o">=</span> <span class="n">md5</span><span class="p">(</span><span class="n">senha</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+                <span class="n">solicit</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;sacar*</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numero</span><span class="si">}</span><span class="s1">*</span><span class="si">{</span><span class="n">valor</span><span class="si">}</span><span class="s1">*</span><span class="si">{</span><span class="n">senha</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_server</span><span class="p">(</span><span class="n">solicit</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                    <span class="n">noti</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">concatenar</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Saque</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">noti</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Saque</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;Senha invalida.&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Saque</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;Informe somente números no espaço do valor.&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Saque</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Todos os espaços devem estar preenchidos.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Saque</span><span class="o">.</span><span class="n">lineSaldo</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Saque</span><span class="o">.</span><span class="n">lineSenha</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Main.BotaoTransferir"><a class="viewcode-back" href="../module1.html#main.Main.BotaoTransferir">[docs]</a>    <span class="k">def</span> <span class="nf">BotaoTransferir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Este é um método que é acionado quando o botão &quot;Transferir&quot; é pressionado na tela. </span>
+<span class="sd">        Ele pega o valor que foi inserido no campo de valor (lineSaldo), </span>
+<span class="sd">        a senha (lineSenha) e o número da conta de destino (lineNumero) da tela de transferência e verifica se todos eles foram preenchidos. </span>
+<span class="sd">        Se estiverem preenchidos, ele verifica se os campos de valor e número da conta contêm apenas números. </span>
+<span class="sd">        Se ambos forem numéricos, a senha é codificada em UTF-8 e convertida em um hash md5. Em seguida, </span>
+<span class="sd">        é criada uma solicitação de transferência com o número da conta de origem (self.numero), a senha hash, </span>
+<span class="sd">        o número da conta de destino e o valor a ser transferido. </span>
+<span class="sd">        Essa solicitação é enviada para o servidor por meio do método request_server() e a resposta é armazenada na variável flag. </span>
+<span class="sd">        Em seguida, a notificação de transferência é exibida na tela de transferência com a mensagem da resposta do servidor. </span>
+<span class="sd">        Caso contrário, a notificação informa que apenas números devem ser inseridos nos campos de valor e número da conta, </span>
+<span class="sd">        ou que todos os campos devem ser preenchidos. </span>
+<span class="sd">        Em todos os casos, os campos de valor, senha e número da conta são redefinidos.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">valor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Transferir</span><span class="o">.</span><span class="n">lineSaldo</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">senha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Transferir</span><span class="o">.</span><span class="n">lineSenha</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="n">numero</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Transferir</span><span class="o">.</span><span class="n">lineNumero</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">valor</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">senha</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">numero</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">valor</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">and</span> <span class="n">numero</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                <span class="n">senha</span> <span class="o">=</span> <span class="n">senha</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+                <span class="n">senha</span> <span class="o">=</span> <span class="n">md5</span><span class="p">(</span><span class="n">senha</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+                <span class="n">solicit</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;transferir*</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numero</span><span class="si">}</span><span class="s1">*</span><span class="si">{</span><span class="n">senha</span><span class="si">}</span><span class="s1">*</span><span class="si">{</span><span class="n">numero</span><span class="si">}</span><span class="s1">*</span><span class="si">{</span><span class="n">valor</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_server</span><span class="p">(</span><span class="n">solicit</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+                <span class="n">noti</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">concatenar</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Transferir</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">noti</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Transferir</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Informe somente números&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Transferir</span><span class="o">.</span><span class="n">labelNotificacao</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Todos os espaços devem ser preenchidos.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Transferir</span><span class="o">.</span><span class="n">lineSaldo</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Transferir</span><span class="o">.</span><span class="n">lineSenha</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Transferir</span><span class="o">.</span><span class="n">lineNumero</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Main.concatenarHis"><a class="viewcode-back" href="../module1.html#main.Main.concatenarHis">[docs]</a>    <span class="k">def</span> <span class="nf">concatenarHis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Essa função recebe uma string e a transforma em um formato mais legível para o usuário exibir na tela como uma notificação de histórico. </span>
+<span class="sd">        Primeiramente, a função cria uma variável noti que vai armazenar a string processada. </span>
+<span class="sd">        Em seguida, ela percorre a string, adiciona um espaço entre cada elemento e armazena em noti. </span>
+<span class="sd">        Depois, ela quebra a string em uma lista com o separador &#39;\n&#39; e adiciona cada elemento em uma nova string a, </span>
+<span class="sd">        adicionando uma quebra de linha para cada elemento. </span>
+<span class="sd">        Por fim, a função retorna a string a.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        string: str</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        a</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">noti</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)):</span>
+            <span class="n">noti</span> <span class="o">+=</span> <span class="n">string</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span>
+        <span class="n">noti</span> <span class="o">=</span> <span class="n">noti</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">n&#39;</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">noti</span><span class="p">:</span>
+            <span class="n">a</span> <span class="o">+=</span> <span class="n">i</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="n">a</span></div>
+
+<div class="viewcode-block" id="Main.BotaoParaTelaHistorico"><a class="viewcode-back" href="../module1.html#main.Main.BotaoParaTelaHistorico">[docs]</a>    <span class="k">def</span> <span class="nf">BotaoParaTelaHistorico</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        A função BotaoParaTelaHistorico é responsável por obter o histórico de transações bancárias do cliente e exibi-las na tela de histórico.</span>
+<span class="sd">        Para isso, é feita uma solicitação ao servidor bancário com o número da conta do cliente e o tipo de solicitação, que é &quot;historico&quot;. </span>
+<span class="sd">        Em seguida, o resultado é passado para a função concatenarHis que formata as informações em uma string para ser exibida na tela.</span>
+<span class="sd">        Por fim, a string formatada é atribuída ao widget de texto textHistorico da tela de histórico e a tela de histórico é exibida.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">solicit</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;historico*</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numero</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_server</span><span class="p">(</span><span class="n">solicit</span><span class="p">)</span>
+        <span class="n">noti</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">concatenarHis</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Tela_Historico</span><span class="o">.</span><span class="n">textHistorico</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">noti</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Main.BotaoExcluir"><a class="viewcode-back" href="../module1.html#main.Main.BotaoExcluir">[docs]</a>    <span class="k">def</span> <span class="nf">BotaoExcluir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Essa função BotaoExcluir é responsável por enviar uma solicitação ao servidor para excluir a conta do usuário logado. </span>
+<span class="sd">        Ela constrói a solicitação concatenando o número da conta do usuário com o comando &quot;excluirConta&quot; e então chama a função request_server para enviar a solicitação ao servidor. </span>
+<span class="sd">        Depois de enviar a solicitação, a função muda a página atual da GUI para a página inicial (index 0 na pilha de widgets QtStack).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">solicit</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;excluirConta*</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numero</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request_server</span><span class="p">(</span><span class="n">solicit</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">QtStack</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Esse trecho de código é o ponto de entrada do programa. </span>
+<span class="sd">    Ele verifica se o módulo atual é o módulo principal (ou seja, não foi importado como um módulo em outro arquivo) e, se for, </span>
+<span class="sd">    cria uma instância do aplicativo QApplication e a janela principal Main, e inicia o loop de eventos do aplicativo chamando app.exec_(). </span>
+<span class="sd">    Quando a janela principal é fechada, o loop de eventos termina e a execução do programa é encerrada</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">show_main</span> <span class="o">=</span> <span class="n">Main</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Willians Silva Filipe Silva.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

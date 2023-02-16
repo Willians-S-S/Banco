@@ -1,0 +1,25 @@
+.. Banco Will documentation master file, created by
+   sphinx-quickstart on Wed Feb 15 20:59:24 2023.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Telas do banco
+======================================
+.. automodule:: Tela_Inicial
+   :members:
+.. automodule:: Tela_Cadastro
+   :members:
+.. automodule:: Tela_Login
+   :members:
+.. automodule:: Tela_Principal
+   :members:
+.. automodule:: Tela_Deposito
+   :members:
+.. automodule:: Tela_Saque
+   :members:
+.. automodule:: Tela_Transferir
+   :members:
+.. automodule:: Tela_Historico
+
+
+

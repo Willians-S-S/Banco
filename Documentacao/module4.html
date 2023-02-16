@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-br" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Servidor &mdash; Banco Will 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Banco" href="module5.html" />
+    <link rel="prev" title="Cliente servidor" href="module3.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Banco Will
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Documentação</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="module1.html">Main</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module2.html">Telas do banco</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module3.html">Cliente servidor</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Servidor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#server_servidor.ClienteThread"><code class="docutils literal notranslate"><span class="pre">ClienteThread</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#server_servidor.ClienteThread.run"><code class="docutils literal notranslate"><span class="pre">ClienteThread.run()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#server_servidor.Servidor"><code class="docutils literal notranslate"><span class="pre">Servidor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#server_servidor.Servidor.start"><code class="docutils literal notranslate"><span class="pre">Servidor.start()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#server_servidor.obterIp"><code class="docutils literal notranslate"><span class="pre">obterIp()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module5.html">Banco</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module6.html">Dabase SQL</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Banco Will</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Documentação</a></li>
+      <li class="breadcrumb-item active">Servidor</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/module4.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-server_servidor">
+<span id="servidor"></span><h1>Servidor<a class="headerlink" href="#module-server_servidor" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="server_servidor.ClienteThread">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">server_servidor.</span></span><span class="sig-name descname"><span class="pre">ClienteThread</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clientSock</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clientAddress</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server_servidor.html#ClienteThread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#server_servidor.ClienteThread" title="Permalink to this definition"></a></dt>
+<dd><p>Instancia um Thread para que a execução simultânea do banco
+aplicações seja possível.</p>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>clientSock<span class="classifier">socket.socket</span></dt><dd><p>Soquete de conexão para enviar e receber solicitações.</p>
+</dd>
+<dt>clientAddress<span class="classifier">str</span></dt><dd><p>Endereço IP de conexão</p>
+</dd>
+</dl>
+</section>
+<section id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>run()</dt><dd><p>inicializar a thread</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="server_servidor.ClienteThread.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/server_servidor.html#ClienteThread.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#server_servidor.ClienteThread.run" title="Permalink to this definition"></a></dt>
+<dd><p>Inicia a execução da thread.</p>
+<p>A thread espera por solicitações do cliente e as processa de acordo com o método fornecido. 
+O método é chamado dinamicamente, usando reflexão. 
+O cliente é desconectado quando o método ‘sair’ é chamado.</p>
+<p>parameters
+Nenhum.</p>
+<p>retorns:
+Nenhum.</p>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="server_servidor.Servidor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">server_servidor.</span></span><span class="sig-name descname"><span class="pre">Servidor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/server_servidor.html#Servidor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#server_servidor.Servidor" title="Permalink to this definition"></a></dt>
+<dd><p>A Classe servidor espera por conexões e quando elas são feitas,
+os envia para a threads.</p>
+<section id="id1">
+<h2>Attributes<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>host<span class="classifier">str</span></dt><dd><p>localhost para fazer conexões.</p>
+</dd>
+<dt>port<span class="classifier">str</span></dt><dd><p>Porta de acesso para fazer conexões</p>
+</dd>
+<dt>server<span class="classifier">socket.socket</span></dt><dd><p>Soquete de conexão para enviar e receber solicitações.</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h2>Methods<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>start(self)</dt><dd><p>Executa o servidor para que ele aguarde as conexões.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="server_servidor.Servidor.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/server_servidor.html#Servidor.start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#server_servidor.Servidor.start" title="Permalink to this definition"></a></dt>
+<dd><p>Aguarda a conexão de um cliente, cria uma nova thread para lidar com suas solicitações e inicia essa thread.</p>
+<dl class="simple">
+<dt>parameters</dt><dd><p>Nenhum.</p>
+</dd>
+<dt>retorna:</dt><dd><p>Nenhum.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="server_servidor.obterIp">
+<span class="sig-prename descclassname"><span class="pre">server_servidor.</span></span><span class="sig-name descname"><span class="pre">obterIp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/server_servidor.html#obterIp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#server_servidor.obterIp" title="Permalink to this definition"></a></dt>
+<dd><p>Esta função tem como objetivo obter o endereço IP da máquina em que o código está sendo executado.</p>
+<dl class="simple">
+<dt>parameters</dt><dd><p>Nenhum.</p>
+</dd>
+<dt>retorns:</dt><dd><p>Retorna uma lista de strings contendo o endereço IP associado às interfaces de rede disponíveis no sistema.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="module3.html" class="btn btn-neutral float-left" title="Cliente servidor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="module5.html" class="btn btn-neutral float-right" title="Banco" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Willians Silva Filipe Silva.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-br" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sql &mdash; Banco Will 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Banco Will
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Aaa</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Banco Will</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">sql</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sql</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">mysql.connector</span> <span class="k">as</span> <span class="nn">mysql</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+
+<div class="viewcode-block" id="Database"><a class="viewcode-back" href="../module6.html#sql.Database">[docs]</a><span class="k">class</span> <span class="nc">Database</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Classe que encapsula a conexão a um banco de dados e fornece métodos para executar operações no banco.</span>
+
+<span class="sd">        Attributes</span>
+<span class="sd">        ----------</span>
+<span class="sd">        conexao : mysql.connector</span>
+<span class="sd">        cursor : mysql.connector.cursor.MySQLCursor</span>
+
+<span class="sd">        Methods</span>
+<span class="sd">        -------</span>
+<span class="sd">        cadastrar(self, usuario, numero, senha, nome, cpf, saldo = 0.0, limite = 1000.0)</span>
+<span class="sd">            Cadastra um novo cliente na base de dados do banco.</span>
+
+<span class="sd">        get_saldo(self, numero)</span>
+<span class="sd">            Consulta o saldo e o limite de um usuário no banco de dados usando o número do usuário como parâmetro.</span>
+
+<span class="sd">        set_saldo(self, numero, valor, flag = True)</span>
+<span class="sd">            Atualiza o saldo de um cliente no banco de dados usando o número do cliente e um valor como parâmetros.</span>
+
+<span class="sd">        enterAccount(self, usuario)</span>
+<span class="sd">            Busca nome, saldo, numero de um cliente no banco de dados com base em seu nome de usuário.</span>
+
+<span class="sd">        verificarUsuario(usuario, senha=None, UserPassword=True) </span>
+<span class="sd">            Verifica se um usuário existe no banco de dados.</span>
+<span class="sd">        </span>
+<span class="sd">        verificaSenha(senha, numero)</span>
+<span class="sd">            Verifica se uma senha corresponde a um número de cliente no banco de dados.</span>
+<span class="sd">        </span>
+<span class="sd">        verificarCPF(cpf) </span>
+<span class="sd">            Verifica se um CPF existe no banco de dados.</span>
+
+<span class="sd">        verificarNumero(numero) </span>
+<span class="sd">            Verifica se um número de cliente existe no banco de dados.</span>
+
+<span class="sd">        get_historico(numero) </span>
+<span class="sd">            Retorna o histórico de transações para um número de cliente.</span>
+
+<span class="sd">        set_historico(numero, his) </span>
+<span class="sd">            Atualiza o histórico de transações para um número de cliente.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">senha</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Construtor da classe que inicializa uma conexão com um banco de dados MySQL e cria um objeto cursor para executar consultas SQL.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            senha: str</span>
+<span class="sd">                Senha para ter acesso ao banco de dados MySQL.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conexao</span> <span class="o">=</span> <span class="n">mysql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="s1">&#39;conta&#39;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">senha</span><span class="p">,</span> <span class="n">autocommit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conexao</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>  <span class="c1">#mysql.connector</span>
+    
+<div class="viewcode-block" id="Database.cadastrar"><a class="viewcode-back" href="../module6.html#sql.Database.cadastrar">[docs]</a>    <span class="k">def</span> <span class="nf">cadastrar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usuario</span><span class="p">,</span> <span class="n">numero</span><span class="p">,</span> <span class="n">senha</span><span class="p">,</span> <span class="n">nome</span><span class="p">,</span> <span class="n">cpf</span><span class="p">,</span> <span class="n">saldo</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">limite</span> <span class="o">=</span> <span class="mf">1000.0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Cadastra um novo cliente na base de dados do banco.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            usuario: str </span>
+<span class="sd">                O nome de usuário do cliente.</span>
+<span class="sd">            numero: int </span>
+<span class="sd">                O número de conta do cliente.</span>
+<span class="sd">            senha: str </span>
+<span class="sd">                A senha do cliente.</span>
+<span class="sd">            nome: str </span>
+<span class="sd">                O nome do cliente.</span>
+<span class="sd">            cpf: str </span>
+<span class="sd">                O CPF do cliente.</span>
+<span class="sd">            saldo: float </span>
+<span class="sd">                O saldo inicial da conta do cliente (opcional, padrão = 0.0).</span>
+<span class="sd">            limite: float </span>
+<span class="sd">                O limite de crédito da conta do cliente (opcional, padrão = 1000.0).</span>
+
+<span class="sd">            returns</span>
+<span class="sd">                None</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="c1"># Obtém a data atual</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%y %H:%M&quot;</span><span class="p">)</span>
+        <span class="c1"># Cria a query de inserção de dados na tabela &quot;cliente&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;INSERT INTO cliente(cpf, nome, usuario, senha, numero, saldo, limite, historico) VALUES (&quot;</span><span class="si">{</span><span class="n">cpf</span><span class="si">}</span><span class="s1">&quot;, &quot;</span><span class="si">{</span><span class="n">nome</span><span class="si">}</span><span class="s1">&quot;, &quot;</span><span class="si">{</span><span class="n">usuario</span><span class="si">}</span><span class="s1">&quot;, &quot;</span><span class="si">{</span><span class="n">senha</span><span class="si">}</span><span class="s1">&quot;, </span><span class="si">{</span><span class="n">numero</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">saldo</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">limite</span><span class="si">}</span><span class="s1">, &quot;Data de de abertura: </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="se">\n\n</span><span class="s1">&quot;)&#39;</span>
+        <span class="c1"># Executa a query no cursor da conexão com a base de dados</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Database.get_saldo"><a class="viewcode-back" href="../module6.html#sql.Database.get_saldo">[docs]</a>    <span class="k">def</span> <span class="nf">get_saldo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numero</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Consulta o saldo e o limite de um usuário no banco de dados usando o número do usuário como parâmetro.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            numero: int</span>
+<span class="sd">                Número da conta do usuário.</span>
+
+<span class="sd">            returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            Suecesso: Retorna uma string com o saldo e o limite do cliente formatados como duas casas decimais </span>
+<span class="sd">            separados por vírgula, por exemplo: &quot;1000.00, 2000.00&quot;.</span>
+<span class="sd">            Falha: Retorna False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;select saldo, limite from cliente where numero = </span><span class="si">{</span><span class="n">numero</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="n">valores</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">valores</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+    
+<div class="viewcode-block" id="Database.set_saldo"><a class="viewcode-back" href="../module6.html#sql.Database.set_saldo">[docs]</a>    <span class="k">def</span> <span class="nf">set_saldo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numero</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="n">flag</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Atualiza o saldo de um cliente no banco de dados usando o número do cliente e um valor como parâmetros.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            numero: int </span>
+<span class="sd">                Número da conta do usuário.</span>
+<span class="sd">            valor: float </span>
+<span class="sd">                Valor a ser adicionado ou subtraído do saldo do cliente. Se o parâmetro flag for True, o valor será adicionado ao saldo atual. Se o parâmetro flag for False, o valor será subtraído do saldo atual.</span>
+<span class="sd">            flag: bool</span>
+<span class="sd">                Se True (padrão), o valor será adicionado ao saldo atual. Se False, o valor será subtraído do saldo atual.</span>
+<span class="sd">            </span>
+<span class="sd">            returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            Retorna None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">saldo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_saldo</span><span class="p">(</span><span class="n">numero</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">flag</span><span class="p">:</span> 
+            <span class="n">valor</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">saldo</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">valor</span> <span class="o">-=</span> <span class="nb">float</span><span class="p">(</span><span class="n">saldo</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;update cliente set saldo = </span><span class="si">{</span><span class="n">valor</span><span class="si">}</span><span class="s1"> where numero = </span><span class="si">{</span><span class="n">numero</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Database.enterAccount"><a class="viewcode-back" href="../module6.html#sql.Database.enterAccount">[docs]</a>    <span class="k">def</span> <span class="nf">enterAccount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usuario</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Busca nome, saldo, numero de um cliente no banco de dados com base em seu nome de usuário.</span>
+
+<span class="sd">        parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        usuario: str</span>
+<span class="sd">            Nome de usuário da conta.</span>
+
+<span class="sd">        returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Retorna uma tupla com dois elementos. O primeiro elemento é True (indicando que a busca foi bem sucedida). </span>
+<span class="sd">        O segundo elemento é uma string com o nome do cliente, seu saldo e seu número de conta, separados por vírgulas</span>
+<span class="sd">        e com duas casas decimais no saldo.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;select nome, saldo, numero from cliente where usuario = &quot;</span><span class="si">{</span><span class="n">usuario</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
+        <span class="n">resul</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="n">resul</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">resul</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">resul</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">resul</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span> 
+        <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">resul</span></div>
+    
+<div class="viewcode-block" id="Database.verificarUsuario"><a class="viewcode-back" href="../module6.html#sql.Database.verificarUsuario">[docs]</a>    <span class="k">def</span> <span class="nf">verificarUsuario</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">usuario</span><span class="p">,</span> <span class="n">senha</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">UserPassword</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Verifica se um usuário existe no banco de dados de clientes.</span>
+<span class="sd">            </span>
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            usuario: str </span>
+<span class="sd">                nome de usuário a ser verificado.</span>
+<span class="sd">            senha: str </span>
+<span class="sd">                senha do usuário a ser verificada (opcional).</span>
+<span class="sd">            UserPassword: bool </span>
+<span class="sd">                indica se a verificação inclui senha (padrão True).</span>
+<span class="sd">            </span>
+<span class="sd">            returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            Sucesso: Retorna True se o usuário existe e a senha está correta e uma string.</span>
+<span class="sd">            Falha: Retorna False e uma string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">UserPassword</span><span class="p">:</span>
+            <span class="c1"># verifica se o usuário existe no banco de dados (incluindo senha)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;SELECT usuario FROM cliente WHERE usuario = &quot;</span><span class="si">{</span><span class="n">usuario</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
+            <span class="n">exists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">exists</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>    
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># verifica se o usuário existe no banco de dados (sem verificar senha)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;SELECT usuario, senha FROM cliente WHERE usuario = &quot;</span><span class="si">{</span><span class="n">usuario</span><span class="si">}</span><span class="s1">&quot; and senha = &quot;</span><span class="si">{</span><span class="n">senha</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
+            <span class="n">exists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">exists</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;Exite.&#39;</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;Usuário ou senha não encontrado.&#39;</span></div>
+    
+<div class="viewcode-block" id="Database.verificaSenha"><a class="viewcode-back" href="../module6.html#sql.Database.verificaSenha">[docs]</a>    <span class="k">def</span> <span class="nf">verificaSenha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">senha</span><span class="p">,</span> <span class="n">numero</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Verifica se a senha e o número de cliente correspondem aos registros no banco de dados.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            senha: str</span>
+<span class="sd">                A senha a ser verificada.</span>
+<span class="sd">            numero int</span>
+<span class="sd">                O número de cliente a ser verificado.</span>
+
+<span class="sd">            returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            Sucesso: True.</span>
+<span class="sd">            Falha: False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;select senha, numero from cliente where senha = &quot;</span><span class="si">{</span><span class="n">senha</span><span class="si">}</span><span class="s1">&quot; and numero = </span><span class="si">{</span><span class="n">numero</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="Database.verificarCPF"><a class="viewcode-back" href="../module6.html#sql.Database.verificarCPF">[docs]</a>    <span class="k">def</span> <span class="nf">verificarCPF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpf</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Verifica se o CPF está registrado no banco de dados de clientes.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            cpf: str</span>
+<span class="sd">                O CPF a ser verificado.</span>
+
+<span class="sd">            returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            Sucesso: True.</span>
+<span class="sd">            Falha: False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;SELECT cpf FROM cliente WHERE cpf = &quot;</span><span class="si">{</span><span class="n">cpf</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
+        <span class="n">exists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">exists</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+        
+<div class="viewcode-block" id="Database.verificarNumero"><a class="viewcode-back" href="../module6.html#sql.Database.verificarNumero">[docs]</a>    <span class="k">def</span> <span class="nf">verificarNumero</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numero</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Verifica se o número de cliente está registrado no banco de dados.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            numero: int</span>
+<span class="sd">                O número de cliente a ser verificado.</span>
+
+<span class="sd">            returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            Sucesso: True.</span>
+<span class="sd">            Falha: False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;SELECT numero FROM cliente WHERE numero = &quot;</span><span class="si">{</span><span class="n">numero</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
+        <span class="n">exists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">exists</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="Database.get_historico"><a class="viewcode-back" href="../module6.html#sql.Database.get_historico">[docs]</a>    <span class="k">def</span> <span class="nf">get_historico</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numero</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Retorna o histórico de transações para o número de cliente fornecido.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            numero: int</span>
+<span class="sd">                O número de cliente cujo histórico de transações será retornado.</span>
+
+<span class="sd">            returns</span>
+<span class="sd">            -------</span>
+<span class="sd">                Retorna uma string que contém o histórico de transações do número de cliente fornecido.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;select historico from cliente where numero = </span><span class="si">{</span><span class="n">numero</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">flag</span></div>
+
+<div class="viewcode-block" id="Database.set_historico"><a class="viewcode-back" href="../module6.html#sql.Database.set_historico">[docs]</a>    <span class="k">def</span> <span class="nf">set_historico</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numero</span><span class="p">,</span> <span class="n">his</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Atualiza o histórico de transações para o número de cliente fornecido.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            numero: int </span>
+<span class="sd">                O número de cliente cujo histórico de transações será atualizado.</span>
+<span class="sd">            his: str </span>
+<span class="sd">                A transação a ser adicionada ao histórico de transações do número de cliente.</span>
+
+<span class="sd">            returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            Nenhum.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_historico</span><span class="p">(</span><span class="n">numero</span><span class="p">)</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">500</span><span class="p">:</span>
+            <span class="n">flag</span> <span class="o">=</span> <span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">35</span><span class="p">:]</span>
+        <span class="n">his</span> <span class="o">=</span> <span class="n">flag</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">his</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;update cliente set historico = &quot;</span><span class="si">{</span><span class="n">his</span><span class="si">}</span><span class="s1">&quot; where numero = </span><span class="si">{</span><span class="n">numero</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Willians Silva Filipe Silva.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

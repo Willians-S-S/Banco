@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-br" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Main &mdash; Banco Will 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Telas do banco" href="module2.html" />
+    <link rel="prev" title="Documentação" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Banco Will
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Documentação</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Main</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.Main"><code class="docutils literal notranslate"><span class="pre">Main</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.BotaoAtualizar"><code class="docutils literal notranslate"><span class="pre">Main.BotaoAtualizar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.BotaoCadastrar"><code class="docutils literal notranslate"><span class="pre">Main.BotaoCadastrar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.BotaoDepoistar"><code class="docutils literal notranslate"><span class="pre">Main.BotaoDepoistar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.BotaoExcluir"><code class="docutils literal notranslate"><span class="pre">Main.BotaoExcluir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.BotaoLogin"><code class="docutils literal notranslate"><span class="pre">Main.BotaoLogin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.BotaoParaTelaCadastro"><code class="docutils literal notranslate"><span class="pre">Main.BotaoParaTelaCadastro()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.BotaoParaTelaDeposito"><code class="docutils literal notranslate"><span class="pre">Main.BotaoParaTelaDeposito()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.BotaoParaTelaHistorico"><code class="docutils literal notranslate"><span class="pre">Main.BotaoParaTelaHistorico()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.BotaoParaTelaLogin"><code class="docutils literal notranslate"><span class="pre">Main.BotaoParaTelaLogin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.BotaoParaTelaPrincipal"><code class="docutils literal notranslate"><span class="pre">Main.BotaoParaTelaPrincipal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.BotaoParaTelaSacar"><code class="docutils literal notranslate"><span class="pre">Main.BotaoParaTelaSacar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.BotaoParaTelaTransferir"><code class="docutils literal notranslate"><span class="pre">Main.BotaoParaTelaTransferir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.BotaoSacar"><code class="docutils literal notranslate"><span class="pre">Main.BotaoSacar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.BotaoTransferir"><code class="docutils literal notranslate"><span class="pre">Main.BotaoTransferir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.BotaoVoltarTelaInicial"><code class="docutils literal notranslate"><span class="pre">Main.BotaoVoltarTelaInicial()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.concatenar"><code class="docutils literal notranslate"><span class="pre">Main.concatenar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.concatenarHis"><code class="docutils literal notranslate"><span class="pre">Main.concatenarHis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.request_server"><code class="docutils literal notranslate"><span class="pre">Main.request_server()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main.Main.sair"><code class="docutils literal notranslate"><span class="pre">Main.sair()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#main.Ui_Main"><code class="docutils literal notranslate"><span class="pre">Ui_Main</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#main.Ui_Main.setupUi"><code class="docutils literal notranslate"><span class="pre">Ui_Main.setupUi()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="module2.html">Telas do banco</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module3.html">Cliente servidor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module4.html">Servidor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module5.html">Banco</a></li>
+<li class="toctree-l2"><a class="reference internal" href="module6.html">Dabase SQL</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Banco Will</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Documentação</a></li>
+      <li class="breadcrumb-item active">Main</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/module1.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-main">
+<span id="main"></span><h1>Main<a class="headerlink" href="#module-main" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="main.Main">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">Main</span></span><a class="reference internal" href="_modules/main.html#Main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="main.Main.BotaoAtualizar">
+<span class="sig-name descname"><span class="pre">BotaoAtualizar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.BotaoAtualizar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.BotaoAtualizar" title="Permalink to this definition"></a></dt>
+<dd><p>Este é um método chamado BotaoAtualizar que é acionado quando o botão “Atualizar” é clicado na tela principal do sistema. 
+Ele cria uma solicitação contendo o número da conta do usuário e o tipo de solicitação, que é “verificarSaldo”, e envia essa solicitação para o servidor.</p>
+<p>Em seguida, ele recebe uma resposta do servidor contendo o saldo atualizado da conta. 
+O saldo é formatado como um número de ponto flutuante com duas casas decimais e exibido na tela principal do sistema, 
+na label denominada “labelSaldo”.</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.BotaoCadastrar">
+<span class="sig-name descname"><span class="pre">BotaoCadastrar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.BotaoCadastrar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.BotaoCadastrar" title="Permalink to this definition"></a></dt>
+<dd><p>Este é um método chamado BotaoCadastrar que é acionado quando o botão “Cadastrar” é clicado na tela de cadastro. 
+Ele recupera os valores dos campos de entrada para nome, cpf, 
+usuário e senha da tela de cadastro e verifica se todos os campos estão preenchidos. 
+Se algum campo estiver vazio, uma notificação será exibida na tela.</p>
+<p>Se todos os campos estiverem preenchidos, o código verifica se o CPF tem 11 dígitos e se é composto apenas por números. 
+Em seguida, a senha é codificada em utf-8 e criptografada usando o algoritmo MD5. 
+Uma solicitação é enviada ao servidor contendo as informações do novo usuário a ser adicionado. 
+A resposta do servidor é concatenada em uma string e exibida na tela de cadastro.</p>
+<p>Independentemente de ter sucesso ou falhar, todos os campos da tela de cadastro são limpos para que um novo usuário possa ser adicionado. 
+Se o CPF não atender aos parâmetros necessários, uma notificação informando isso é exibida na tela</p>
+<section id="id1">
+<h2>Parameters<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="id2">
+<h2>Returns<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.BotaoDepoistar">
+<span class="sig-name descname"><span class="pre">BotaoDepoistar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.BotaoDepoistar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.BotaoDepoistar" title="Permalink to this definition"></a></dt>
+<dd><p>Este é um método chamado BotaoDepoistar que é acionado quando o botão “Depositar” é clicado na tela de depósito. 
+Ele verifica se o campo de valor não está vazio e se contém apenas dígitos. 
+Se for o caso, uma solicitação de depósito é enviada ao servidor com o número da conta e o valor do depósito. 
+O campo de notificação da tela de depósito é atualizado com a mensagem retornada pelo servidor e, em seguida, o campo de valor é limpo. 
+Se o campo de valor estiver vazio ou não contiver apenas dígitos, uma mensagem apropriada é exibida no campo de notificação.</p>
+<section id="id3">
+<h2>Parameters<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="id4">
+<h2>Returns<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.BotaoExcluir">
+<span class="sig-name descname"><span class="pre">BotaoExcluir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.BotaoExcluir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.BotaoExcluir" title="Permalink to this definition"></a></dt>
+<dd><p>Essa função BotaoExcluir é responsável por enviar uma solicitação ao servidor para excluir a conta do usuário logado. 
+Ela constrói a solicitação concatenando o número da conta do usuário com o comando “excluirConta” e então chama a função request_server para enviar a solicitação ao servidor. 
+Depois de enviar a solicitação, a função muda a página atual da GUI para a página inicial (index 0 na pilha de widgets QtStack).</p>
+<section id="id5">
+<h2>Parameters<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="id6">
+<h2>Returns<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.BotaoLogin">
+<span class="sig-name descname"><span class="pre">BotaoLogin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.BotaoLogin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.BotaoLogin" title="Permalink to this definition"></a></dt>
+<dd><p>Este é um método chamado BotaoLogin que é acionado quando o botão “Login” é clicado na tela de login. 
+Ele recupera os valores dos campos de entrada para usuário e senha da tela de login e verifica se ambos estão preenchidos. 
+Se algum campo estiver vazio, uma notificação será exibida na tela.</p>
+<p>Se ambos os campos estiverem preenchidos, o código codifica a senha em utf-8 e a criptografa usando o algoritmo MD5. 
+Em seguida, é criada uma solicitação contendo as informações de login do usuário e enviada para o servidor. 
+A resposta do servidor é recebida e processada. 
+Se o primeiro elemento da resposta for ‘True’, o login é bem-sucedido e o usuário é direcionado para a tela principal do sistema.</p>
+<p>Caso contrário, uma notificação informando que o login falhou é exibida na tela de login. 
+Independentemente de ter sucesso ou falhar, os campos da tela de login são limpos para que um novo login possa ser feito.</p>
+<section id="id7">
+<h2>Parameters<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="id8">
+<h2>Returns<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.BotaoParaTelaCadastro">
+<span class="sig-name descname"><span class="pre">BotaoParaTelaCadastro</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.BotaoParaTelaCadastro"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.BotaoParaTelaCadastro" title="Permalink to this definition"></a></dt>
+<dd><p>Botão para abrir a tela de cadastro.</p>
+<section id="id9">
+<h2>Parameters<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="id10">
+<h2>Returns<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.BotaoParaTelaDeposito">
+<span class="sig-name descname"><span class="pre">BotaoParaTelaDeposito</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.BotaoParaTelaDeposito"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.BotaoParaTelaDeposito" title="Permalink to this definition"></a></dt>
+<dd><p>Botão para a tela de deposito, 
+ele limpa o campo de notificação da tela de deposito, em seguida altera a tela atual do sistema para a tela de deposito.</p>
+<section id="id11">
+<h2>Parameters<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="id12">
+<h2>Returns<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.BotaoParaTelaHistorico">
+<span class="sig-name descname"><span class="pre">BotaoParaTelaHistorico</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.BotaoParaTelaHistorico"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.BotaoParaTelaHistorico" title="Permalink to this definition"></a></dt>
+<dd><p>A função BotaoParaTelaHistorico é responsável por obter o histórico de transações bancárias do cliente e exibi-las na tela de histórico.
+Para isso, é feita uma solicitação ao servidor bancário com o número da conta do cliente e o tipo de solicitação, que é “historico”. 
+Em seguida, o resultado é passado para a função concatenarHis que formata as informações em uma string para ser exibida na tela.
+Por fim, a string formatada é atribuída ao widget de texto textHistorico da tela de histórico e a tela de histórico é exibida.</p>
+<section id="id13">
+<h2>Parameters<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="id14">
+<h2>Returns<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.BotaoParaTelaLogin">
+<span class="sig-name descname"><span class="pre">BotaoParaTelaLogin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.BotaoParaTelaLogin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.BotaoParaTelaLogin" title="Permalink to this definition"></a></dt>
+<dd><p>Botão para abrir a tela de login.</p>
+<section id="id15">
+<h2>Parameters<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="id16">
+<h2>Returns<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.BotaoParaTelaPrincipal">
+<span class="sig-name descname"><span class="pre">BotaoParaTelaPrincipal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.BotaoParaTelaPrincipal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.BotaoParaTelaPrincipal" title="Permalink to this definition"></a></dt>
+<dd><p>Botão para a tela do menu do usuario. 
+ele limpa o campo de notificação da tela de principal, em seguida altera a tela atual do sistema para a tela principal.</p>
+<section id="id17">
+<h2>Parameters<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="id18">
+<h2>Returns<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.BotaoParaTelaSacar">
+<span class="sig-name descname"><span class="pre">BotaoParaTelaSacar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.BotaoParaTelaSacar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.BotaoParaTelaSacar" title="Permalink to this definition"></a></dt>
+<dd><p>Botão para a tela sacar, 
+ele limpa o campo de notificação da tela de saque, em seguida altera a tela atual do sistema para a tela de deposito.</p>
+<section id="id19">
+<h2>Parameters<a class="headerlink" href="#id19" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="id20">
+<h2>Returns<a class="headerlink" href="#id20" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.BotaoParaTelaTransferir">
+<span class="sig-name descname"><span class="pre">BotaoParaTelaTransferir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.BotaoParaTelaTransferir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.BotaoParaTelaTransferir" title="Permalink to this definition"></a></dt>
+<dd><p>Botão para a tela transferir, 
+ele limpa o campo de notificação da tela transferir, em seguida altera a tela atual do sistema para a tela de transferir.</p>
+<section id="id21">
+<h2>Parameters<a class="headerlink" href="#id21" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="id22">
+<h2>Returns<a class="headerlink" href="#id22" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.BotaoSacar">
+<span class="sig-name descname"><span class="pre">BotaoSacar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.BotaoSacar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.BotaoSacar" title="Permalink to this definition"></a></dt>
+<dd><p>O método BotaoSacar é chamado quando o usuário clica no botão “Sacar” na tela de operações. 
+Ele pega o valor e a senha inseridos pelo usuário, verifica se o valor é um número válido e codifica a senha usando o algoritmo MD5. 
+Em seguida, constrói uma mensagem com o número da conta, o valor e a senha codificada e envia uma solicitação ao servidor. 
+Se a operação for bem-sucedida, uma mensagem de notificação é exibida na tela de operações, caso contrário, 
+uma mensagem de senha inválida é exibida. Por fim, os campos de valor e senha são limpos.</p>
+<section id="id23">
+<h2>Parameters<a class="headerlink" href="#id23" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="id24">
+<h2>Returns<a class="headerlink" href="#id24" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.BotaoTransferir">
+<span class="sig-name descname"><span class="pre">BotaoTransferir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.BotaoTransferir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.BotaoTransferir" title="Permalink to this definition"></a></dt>
+<dd><p>Este é um método que é acionado quando o botão “Transferir” é pressionado na tela. 
+Ele pega o valor que foi inserido no campo de valor (lineSaldo), 
+a senha (lineSenha) e o número da conta de destino (lineNumero) da tela de transferência e verifica se todos eles foram preenchidos. 
+Se estiverem preenchidos, ele verifica se os campos de valor e número da conta contêm apenas números. 
+Se ambos forem numéricos, a senha é codificada em UTF-8 e convertida em um hash md5. Em seguida, 
+é criada uma solicitação de transferência com o número da conta de origem (self.numero), a senha hash, 
+o número da conta de destino e o valor a ser transferido. 
+Essa solicitação é enviada para o servidor por meio do método request_server() e a resposta é armazenada na variável flag. 
+Em seguida, a notificação de transferência é exibida na tela de transferência com a mensagem da resposta do servidor. 
+Caso contrário, a notificação informa que apenas números devem ser inseridos nos campos de valor e número da conta, 
+ou que todos os campos devem ser preenchidos. 
+Em todos os casos, os campos de valor, senha e número da conta são redefinidos.</p>
+<section id="id25">
+<h2>Parameters<a class="headerlink" href="#id25" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="id26">
+<h2>Returns<a class="headerlink" href="#id26" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.BotaoVoltarTelaInicial">
+<span class="sig-name descname"><span class="pre">BotaoVoltarTelaInicial</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.BotaoVoltarTelaInicial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.BotaoVoltarTelaInicial" title="Permalink to this definition"></a></dt>
+<dd><p>Botão que volta para a tela inicial do sistema.</p>
+<section id="id27">
+<h2>Parameters<a class="headerlink" href="#id27" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="id28">
+<h2>Returns<a class="headerlink" href="#id28" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.concatenar">
+<span class="sig-name descname"><span class="pre">concatenar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.concatenar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.concatenar" title="Permalink to this definition"></a></dt>
+<dd><p>Este é um método chamado concatenar que recebe uma string como entrada e concatena todos os caracteres da string, 
+exceto o primeiro caractere (índice 0), com um caractere de espaço entre cada caractere.
+A string concatenada resultante é então retornada.</p>
+<section id="id29">
+<h2>Parameters<a class="headerlink" href="#id29" title="Permalink to this heading"></a></h2>
+<p>string: Str</p>
+</section>
+<section id="id30">
+<h2>Returns<a class="headerlink" href="#id30" title="Permalink to this heading"></a></h2>
+<p>noti</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.concatenarHis">
+<span class="sig-name descname"><span class="pre">concatenarHis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.concatenarHis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.concatenarHis" title="Permalink to this definition"></a></dt>
+<dd><blockquote>
+<div><p>Essa função recebe uma string e a transforma em um formato mais legível para o usuário exibir na tela como uma notificação de histórico. 
+Primeiramente, a função cria uma variável noti que vai armazenar a string processada. 
+Em seguida, ela percorre a string, adiciona um espaço entre cada elemento e armazena em noti. 
+Depois, ela quebra a string em uma lista com o separador ‘</p>
+</div></blockquote>
+<dl>
+<dt>‘ e adiciona cada elemento em uma nova string a, </dt><dd><p>adicionando uma quebra de linha para cada elemento. 
+Por fim, a função retorna a string a.</p>
+<p>string: str</p>
+<p>a</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.request_server">
+<span class="sig-name descname"><span class="pre">request_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.request_server"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.request_server" title="Permalink to this definition"></a></dt>
+<dd><p>Essa função envia uma requisição de mensagem para o servidor com a request como parâmetro. 
+Em seguida, aguarda uma resposta de até 2048 bytes do servidor e a converte em uma string. 
+Então, remove todos os caracteres desnecessários da resposta e retorna como uma lista de palavras.</p>
+<section id="id31">
+<h2>Parameters<a class="headerlink" href="#id31" title="Permalink to this heading"></a></h2>
+<p>request :Str</p>
+</section>
+<section id="id32">
+<h2>Returns<a class="headerlink" href="#id32" title="Permalink to this heading"></a></h2>
+<p>flag</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main.Main.sair">
+<span class="sig-name descname"><span class="pre">sair</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Main.sair"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Main.sair" title="Permalink to this definition"></a></dt>
+<dd><p>Botão para sair do sistema.</p>
+<section id="id33">
+<h2>Parameters<a class="headerlink" href="#id33" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+<section id="id34">
+<h2>Returns<a class="headerlink" href="#id34" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main.Ui_Main">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">Ui_Main</span></span><a class="reference internal" href="_modules/main.html#Ui_Main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Ui_Main" title="Permalink to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="main.Ui_Main.setupUi">
+<span class="sig-name descname"><span class="pre">setupUi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Main</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#Ui_Main.setupUi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.Ui_Main.setupUi" title="Permalink to this definition"></a></dt>
+<dd><p>Esta classe define a interface gráfica do usuário usando PyQt5. 
+Ele define uma janela principal (Main) e um layout de pilha de várias outras janelas (stack0 a stack7) 
+que podem ser alternadas dentro da janelaprincipal. 
+Cada tela é definida em seu próprio arquivo de classe, como TelaCadastro, TelaLogin etc. 
+O método setupUi() é chamado para cada tela para configurar sua aparência e funcionamento, 
+e cada uma delas é adicionada ao layout de pilha por meio do método addWidget().</p>
+<section id="id35">
+<h2>Parameters<a class="headerlink" href="#id35" title="Permalink to this heading"></a></h2>
+<p>Main: Object</p>
+</section>
+<section id="id36">
+<h2>Returns<a class="headerlink" href="#id36" title="Permalink to this heading"></a></h2>
+<p>None</p>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="Documentação" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="module2.html" class="btn btn-neutral float-right" title="Telas do banco" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Willians Silva Filipe Silva.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

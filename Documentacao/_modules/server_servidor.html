@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-br" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>server_servidor &mdash; Banco Will 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Banco Will
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Documentação</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Banco Will</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">server_servidor</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for server_servidor</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">from</span> <span class="nn">banco</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">netifaces</span> <span class="kn">import</span> <span class="n">interfaces</span><span class="p">,</span> <span class="n">ifaddresses</span><span class="p">,</span> <span class="n">AF_INET</span>
+<span class="kn">from</span> <span class="nn">senha</span> <span class="kn">import</span> <span class="n">senha</span>
+
+<div class="viewcode-block" id="ClienteThread"><a class="viewcode-back" href="../module4.html#server_servidor.ClienteThread">[docs]</a><span class="k">class</span> <span class="nc">ClienteThread</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Instancia um Thread para que a execução simultânea do banco</span>
+<span class="sd">        aplicações seja possível.</span>
+
+<span class="sd">        Attributes</span>
+<span class="sd">        ----------</span>
+<span class="sd">        clientSock : socket.socket</span>
+<span class="sd">            Soquete de conexão para enviar e receber solicitações.</span>
+<span class="sd">        clientAddress : str</span>
+<span class="sd">            Endereço IP de conexão</span>
+
+<span class="sd">        Methods</span>
+<span class="sd">        -------</span>
+<span class="sd">        run()</span>
+<span class="sd">            inicializar a thread</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clientSock</span><span class="p">,</span> <span class="n">clientAddress</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Construtor da classe ClienteThread.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            clientSock: socket.socket</span>
+<span class="sd">                Soquete de conexão para enviar e receber solicitações.</span>
+<span class="sd">            clientAddress : str</span>
+<span class="sd">                Endereço IP de conexão.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clientSock</span> <span class="o">=</span> <span class="n">clientSock</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clientAddress</span> <span class="o">=</span> <span class="n">clientAddress</span>
+
+<div class="viewcode-block" id="ClienteThread.run"><a class="viewcode-back" href="../module4.html#server_servidor.ClienteThread.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Inicia a execução da thread.</span>
+
+<span class="sd">            A thread espera por solicitações do cliente e as processa de acordo com o método fornecido. </span>
+<span class="sd">            O método é chamado dinamicamente, usando reflexão. </span>
+<span class="sd">            O cliente é desconectado quando o método &#39;sair&#39; é chamado. </span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            Nenhum.</span>
+
+<span class="sd">            retorns:</span>
+<span class="sd">            Nenhum.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">solicitaco</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clientSock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">2048</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">)</span> 
+                <span class="c1"># Buscando o método da requisição no banco</span>
+                <span class="k">if</span> <span class="n">solicitaco</span><span class="p">:</span>
+                    <span class="n">metodo</span> <span class="o">=</span> <span class="n">solicitaco</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">metodo</span> <span class="o">==</span> <span class="s1">&#39;sair&#39;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">clientSock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                        <span class="k">break</span>
+                    <span class="n">banco</span> <span class="o">=</span> <span class="n">Banco</span><span class="p">(</span><span class="n">senha</span><span class="p">)</span>
+                    <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">banco</span><span class="p">,</span> <span class="n">metodo</span><span class="p">)</span>
+                    <span class="c1"># executando o método e passando todos os parametros que foram recebidos na requisição</span>
+                    <span class="n">retorno</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">solicitaco</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">clientSock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">retorno</span><span class="si">}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span> 
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Algo deu errado&#39;</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="Servidor"><a class="viewcode-back" href="../module4.html#server_servidor.Servidor">[docs]</a><span class="k">class</span> <span class="nc">Servidor</span><span class="p">():</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A Classe servidor espera por conexões e quando elas são feitas,</span>
+<span class="sd">        os envia para a threads.</span>
+
+<span class="sd">        Attributes</span>
+<span class="sd">        ----------</span>
+<span class="sd">        host : str</span>
+<span class="sd">            localhost para fazer conexões.</span>
+<span class="sd">        port : str</span>
+<span class="sd">            Porta de acesso para fazer conexões</span>
+<span class="sd">        server : socket.socket</span>
+<span class="sd">            Soquete de conexão para enviar e receber solicitações.</span>
+
+<span class="sd">        Methods</span>
+<span class="sd">        -------</span>
+<span class="sd">        start(self)</span>
+<span class="sd">            Executa o servidor para que ele aguarde as conexões.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Construtor da classe Servidor.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            host : str</span>
+<span class="sd">                localhost para fazer conexões.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">host</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="mi">8005</span>
+        <span class="n">addr</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">serv_socket</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span> <span class="c1">#cria o socket</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">serv_socket</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c1">#reinicia o socket</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">serv_socket</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span> <span class="c1">#define as portas e quais ips podem se conectar com o servidor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">serv_socket</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1">#define o limite de conexões</span>
+
+        
+<div class="viewcode-block" id="Servidor.start"><a class="viewcode-back" href="../module4.html#server_servidor.Servidor.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Aguarda a conexão de um cliente, cria uma nova thread para lidar com suas solicitações e inicia essa thread.</span>
+
+<span class="sd">            parameters</span>
+<span class="sd">                Nenhum.</span>
+
+<span class="sd">            retorna:</span>
+<span class="sd">                Nenhum.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;aguardando conexão...</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">client_sock</span><span class="p">,</span> <span class="n">client_address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">serv_socket</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span> 
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Cliente </span><span class="si">{</span><span class="n">client_address</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> conectado.</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;aguardando solicitação...</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="n">novaThread</span> <span class="o">=</span> <span class="n">ClienteThread</span><span class="p">(</span><span class="n">client_sock</span><span class="p">,</span> <span class="n">client_address</span><span class="p">)</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Thread inciada</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">novaThread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div></div>
+
+<div class="viewcode-block" id="obterIp"><a class="viewcode-back" href="../module4.html#server_servidor.obterIp">[docs]</a><span class="k">def</span> <span class="nf">obterIp</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Esta função tem como objetivo obter o endereço IP da máquina em que o código está sendo executado.</span>
+
+<span class="sd">        parameters</span>
+<span class="sd">            Nenhum.</span>
+<span class="sd">        retorns:</span>
+<span class="sd">            Retorna uma lista de strings contendo o endereço IP associado às interfaces de rede disponíveis no sistema.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">ifaceName</span> <span class="ow">in</span> <span class="n">interfaces</span><span class="p">():</span>
+        <span class="n">addresses</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="s1">&#39;addr&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ifaddresses</span><span class="p">(</span><span class="n">ifaceName</span><span class="p">)</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="p">[{</span><span class="s1">&#39;addr&#39;</span><span class="p">:</span><span class="s1">&#39;No IP addr&#39;</span><span class="p">}]</span> <span class="p">)]</span> <span class="c1"># pega o ip da maquina</span>
+    <span class="k">return</span> <span class="n">addresses</span></div>
+    
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">ip</span> <span class="o">=</span> <span class="n">obterIp</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Ip do servidor: </span><span class="si">{</span><span class="n">ip</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Servidor</span><span class="p">(</span><span class="n">ip</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Willians Silva Filipe Silva.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
